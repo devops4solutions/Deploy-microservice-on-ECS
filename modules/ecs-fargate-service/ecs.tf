@@ -21,7 +21,7 @@ resource "aws_ecs_service" "app_service" {
     registry_arn = aws_service_discovery_service.example.arn
   }
   network_configuration {
-    subnets          = data.aws_subnets.private.ids
+    subnets          = data.aws_subnets.public.ids
     assign_public_ip = false                                          # Provide the containers with public IPs
     security_groups  = [aws_security_group.service_security_group.id] # Set up the security group
   }

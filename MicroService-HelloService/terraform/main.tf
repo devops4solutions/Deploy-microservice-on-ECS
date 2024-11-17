@@ -11,7 +11,7 @@ module "ecs-fargate-service" {
   ecr_repository_name = "public.ecr.aws/w0f5g4k6/hello-svc"
   port                = 80
   health_check_path   = "/hello"
-  cloudmap_namespace  = "corp"
+  cloudmap_namespace  =  var.cloudmap_namespace
   cpu                 = "512"
   memory              = "1024"
   path_pattern        = "hello"

@@ -5,6 +5,9 @@ variable "region" {
 variable "environment" {
   default = "dev"
 }
+variable "cloudmap_namespace"{
+  default =""
+}
 
 variable "application" {
   default = "hello"

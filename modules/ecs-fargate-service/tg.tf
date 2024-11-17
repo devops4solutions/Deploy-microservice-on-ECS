@@ -28,7 +28,6 @@ resource "aws_lb_target_group" "app" {
 
 
 resource "aws_alb_listener_rule" "http" {
-
   listener_arn = data.aws_lb_listener.listner.arn
   action {
     type             = "forward"
@@ -37,21 +36,6 @@ resource "aws_alb_listener_rule" "http" {
   condition {
     path_pattern {
       values = ["/hello"]
-    }
-  }
-}
-
-resource "aws_alb_listener_rule" "http_cs" {
-  count        = var.path_pattern != "" ? 1 : 0
-  priority     = random_integer.priority.result
-  listener_arn = data.aws_lb_listener.listner.arn
-  action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.app.arn
-  }
-  condition {
-    path_pattern {
-      values = [var.path_pattern]
     }
   }
 }

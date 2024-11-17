@@ -27,9 +27,6 @@ data "aws_ecs_cluster" "cluster" {
   cluster_name = var.ecs_cluster
 }
 
-data "aws_ecr_repository" "service" {
-  name = var.ecr_repository_name
-}
 data "aws_service_discovery_dns_namespace" "test" {
   name = var.cloudmap_namespace
   type = "DNS_PRIVATE"

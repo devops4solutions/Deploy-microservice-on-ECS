@@ -1,3 +1,3 @@
-region = "ca-central-1"
-bucket = "terraform-state-files-197686806564"
-key    = "vd-dev/ecs-spring/infra.tfstate"
+region = "us-east-1"
+bucket = "devops4solutions-terraform"
+key    = "dev/hellosvc.tfstate"

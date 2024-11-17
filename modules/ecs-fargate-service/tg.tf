@@ -1,6 +1,5 @@
 resource "aws_lb_target_group" "app" {
   //deregistration_delay = "30"
-
   health_check {
     enabled             = "true"
     healthy_threshold   = "2"

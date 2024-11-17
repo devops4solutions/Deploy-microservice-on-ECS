@@ -41,6 +41,7 @@ data "aws_lb" "alb" {
 
 data "aws_lb_listener" "listner" {
   load_balancer_arn = data.aws_lb.alb.arn
+  port              = 80
 }
 
 data "aws_region" "current" {}

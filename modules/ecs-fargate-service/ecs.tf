@@ -18,7 +18,7 @@ resource "aws_ecs_service" "app_service" {
   }
 
   service_registries {
-    registry_arn = aws_service_discovery_service.example.arn
+    registry_arn = aws_service_discovery_service.example.id
   }
   network_configuration {
     subnets          = data.aws_subnets.private.ids

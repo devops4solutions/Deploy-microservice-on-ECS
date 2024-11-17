@@ -38,7 +38,7 @@ resource "aws_ecs_task_definition" "app_task" {
     [
       {
         "name" : "${var.application}-${var.environment}",
-        "image" : "${data.aws_ecr_repository.service.repository_url}:${var.container_version}",
+        "image" : "${var.ecr_repository_name}:${var.container_version}",
         "essential" : true,
         "logConfiguration" : {
           "logDriver" : "awslogs",

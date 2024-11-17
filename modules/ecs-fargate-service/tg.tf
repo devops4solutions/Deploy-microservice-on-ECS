@@ -1,6 +1,5 @@
 resource "aws_lb_target_group" "app" {
   //deregistration_delay = "30"
-
   health_check {
     enabled             = "true"
     healthy_threshold   = "2"
@@ -28,29 +27,6 @@ resource "aws_lb_target_group" "app" {
 
 
 resource "aws_alb_listener_rule" "http" {
-  count = var.subdomain != "" ? 1 : 0
-
-  listener_arn = data.aws_lb_listener.listner.arn
-  action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.app.arn
-  }
-  condition {
-    host_header {
-      values = [var.subdomain]
-    }
-  }
-}
-
-resource "random_integer" "priority" {
-  min = 1
-  max = 99
-}
-
-
-resource "aws_alb_listener_rule" "http_cs" {
-  count        = var.path_pattern != "" ? 1 : 0
-  priority     = random_integer.priority.result
   listener_arn = data.aws_lb_listener.listner.arn
   action {
     type             = "forward"
@@ -58,37 +34,7 @@ resource "aws_alb_listener_rule" "http_cs" {
   }
   condition {
     path_pattern {
-      values = [var.path_pattern]
+      values = ["/hello"]
     }
   }
 }
-
-resource "aws_alb_listener_rule" "cs_react" {
-  count        = var.subdomain_cs != "" ? 1 : 0
-  priority     = 100
-  listener_arn = data.aws_lb_listener.listner.arn
-  action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.app.arn
-  }
-  condition {
-    host_header {
-      values = [var.subdomain_cs]
-    }
-  }
-}
-
-/*resource "aws_alb_listener_rule" "cs_react_www" {
-  count        = var.subdomain_cs != "" ? 1 : 0
-  priority     = 101
-  listener_arn = data.aws_lb_listener.listner.arn
-  action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.app.arn
-  }
-  condition {
-    host_header {
-      values = ["www.${var.subdomain_cs}"]
-    }
-  }
-}*/

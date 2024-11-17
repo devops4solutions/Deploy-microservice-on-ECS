@@ -17,7 +17,6 @@ variable "region" {
 variable "desired_count" {
   default = "1"
 }
-
 variable "app_definitions" {
   default = ""
 }

@@ -18,7 +18,7 @@ resource "aws_ecs_service" "app_service" {
   }
 
   service_registries {
-    registry_arn = data.aws_service_discovery_dns_namespace.test.arn
+    registry_arn = aws_service_discovery_service.example.arn
   }
   network_configuration {
     subnets          = data.aws_subnets.private.ids
@@ -70,7 +70,7 @@ resource "aws_service_discovery_service" "example" {
   name = var.application
 
   dns_config {
-    namespace_id = var.cloudmap_namespace
+    namespace_id = data.aws_service_discovery_dns_namespace.test.id
     dns_records {
       ttl  = 10
       type = "A"

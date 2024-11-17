@@ -5,8 +5,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'MicroService-HelloService/**'
   pull_request:
     branches: [ main ]
     paths:
@@ -31,7 +29,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app.jar
-          path: MicroService-HelloService/target/helloservice.jar
+          path: MicroService-HelloService/target/helloservice-1.jar
   docker-build:
     needs: build
     runs-on: [ ubuntu-latest ]

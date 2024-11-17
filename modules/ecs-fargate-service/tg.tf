@@ -28,7 +28,6 @@ resource "aws_lb_target_group" "app" {
 
 
 resource "aws_alb_listener_rule" "http" {
-  count = var.subdomain != "" ? 1 : 0
 
   listener_arn = data.aws_lb_listener.listner.arn
   action {
@@ -36,8 +35,8 @@ resource "aws_alb_listener_rule" "http" {
     target_group_arn = aws_lb_target_group.app.arn
   }
   condition {
-    host_header {
-      values = [var.subdomain]
+    path_pattern {
+      values = ["/hello"]
     }
   }
 }
@@ -62,33 +61,3 @@ resource "aws_alb_listener_rule" "http_cs" {
     }
   }
 }
-
-resource "aws_alb_listener_rule" "cs_react" {
-  count        = var.subdomain_cs != "" ? 1 : 0
-  priority     = 100
-  listener_arn = data.aws_lb_listener.listner.arn
-  action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.app.arn
-  }
-  condition {
-    host_header {
-      values = [var.subdomain_cs]
-    }
-  }
-}
-
-/*resource "aws_alb_listener_rule" "cs_react_www" {
-  count        = var.subdomain_cs != "" ? 1 : 0
-  priority     = 101
-  listener_arn = data.aws_lb_listener.listner.arn
-  action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.app.arn
-  }
-  condition {
-    host_header {
-      values = ["www.${var.subdomain_cs}"]
-    }
-  }
-}*/

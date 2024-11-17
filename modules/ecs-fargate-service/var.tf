@@ -17,10 +17,6 @@ variable "region" {
 variable "desired_count" {
   default = "1"
 }
-variable "path_pattern" {
-  default = ""
-  
-}
 variable "app_definitions" {
   default = ""
 }

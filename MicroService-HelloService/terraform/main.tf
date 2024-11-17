@@ -14,4 +14,5 @@ module "ecs-fargate-service" {
   cloudmap_namespace  = "corp"
   cpu                 = "512"
   memory              = "1024"
+  path_pattern        = "hello"
 }

@@ -41,12 +41,6 @@ resource "aws_alb_listener_rule" "http" {
   }
 }
 
-resource "random_integer" "priority" {
-  min = 1
-  max = 99
-}
-
-
 resource "aws_alb_listener_rule" "http_cs" {
   count        = var.path_pattern != "" ? 1 : 0
   priority     = random_integer.priority.result

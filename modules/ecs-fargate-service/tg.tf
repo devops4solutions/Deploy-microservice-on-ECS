@@ -34,7 +34,7 @@ resource "aws_alb_listener_rule" "http" {
   }
   condition {
     path_pattern {
-      values = ["/hello"]
+      values = [var.path_pattern]
     }
   }
 }

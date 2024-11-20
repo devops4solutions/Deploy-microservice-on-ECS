@@ -133,4 +133,49 @@ In this example, we will explore how to deploy Java microservices using ECS Serv
     - Combines the messages and presents them to the end user.
   - Register this service with CloudMap.
   - Ensure that it uses the internal DNS names to communicate with Hello and World services.
+ 
+  ```markdown
+### Service Specific Resources
+
+These resources are unique across all microservices:
+
+Now that we have three microservices, we'll use a monorepo setup for deployment. Here's what each service needs to deploy on the ECS cluster:
+
+- **ECS Task Definition**: Defines the container specifications and resources for your microservice.
+- **ECS Service**: Manages the deployment and scaling of your ECS tasks.
+- **Target Groups**: Directs traffic to the appropriate ECS tasks based on routing rules.
+- **ECS IAM Role**: Grants necessary permissions for ECS tasks to interact with other AWS services.
+- **ECS Security Groups**: Controls inbound and outbound traffic to ensure secure communication.
+- **ALB Listener Rules**: Routes incoming traffic to the correct target groups based on specified conditions.
+
+To reduce duplication and simplify maintenance, we'll use reusable Terraform modules. This approach allows us to use the same code across all microservices, making future updates easier. Here's how we'll structure it:
+
+- **Modules Folder**: This folder will contain all the code needed to deploy your service on the ECS cluster and use the datasource to fetch the shared AWS resources. The module code is designed to use variables, allowing us to pass different values when calling the module. This approach ensures flexibility and reusability, enabling the same module to be used across multiple services with varying configurations.
+- **Microservices Folders**: We'll create a folder for each microservice. Inside each folder, we'll have a Terraform folder that calls the module, passing all the necessary values for the service to be deployed on the ECS cluster successfully.
+
+### GitHub Actions for Deployment
+
+Next, let's set up GitHub Actions for deployment. We'll start with Continuous Integration (CI) for our Java project built using Maven:
+
+1. **Build the Maven Project**: Use GitHub Actions to build the Maven project and specify the Java version.
+2. **Upload the Artifact**: Upload the artifact and set a retention period to avoid keeping it indefinitely. This artifact is used temporarily to build the Docker image, which will be published in ECR.
+3. **Download the Artifact**: Download the artifact for use in the Docker build process.
+4. **Docker Build**: Build the Docker image.
+5. **Push to ECR**: Push the Docker image to public ECR using a version tag based on `github.sha`. This practice ensures that we always deploy using a specific version rather than the latest tag.
+
+For deployment, we'll use Terraform commands:
+
+- **Terraform Init**: Initialize Terraform.
+- **Terraform Plan**: Plan the deployment.
+- **Terraform Apply**: Apply the deployment, passing the container version using `TF_VAR` as an environment variable from GitHub Actions.
+
+By following these steps, we ensure that all shared infrastructure is successfully deployed in your AWS account, and each microservice is efficiently managed and deployed using reusable Terraform modules and GitHub Actions.
+
+### Advantages of This Approach
+
+- **Automation**: Everything is automated, ensuring a smooth and efficient deployment process.
+- **Effective Management**: This design allows you to manage your shared infrastructure properly and separately from your microservices.
+- **Quick Deployment**: With this setup, everything can be deployed successfully in just 2–3 minutes. Any new microservice can be integrated into this process with minimal effort and time.
+- **Rapid Environment Setup**: Any new environment deployment can be set up in 2–3 minutes, making it easy to scale and adapt to new requirements.
+```
 

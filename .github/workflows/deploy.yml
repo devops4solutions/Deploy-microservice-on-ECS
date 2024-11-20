@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'MicroService-HelloService/**'
   pull_request:
     branches: [ main ]
     paths:

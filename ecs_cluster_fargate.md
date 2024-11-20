@@ -139,6 +139,9 @@ In this example, we will explore how to deploy Java microservices using ECS Serv
 
 These resources are unique across all microservices:
 
+![image](https://github.com/user-attachments/assets/608b65a5-2fd6-4f58-9120-0ceb334741cf)
+
+
 Now that we have three microservices, we'll use a monorepo setup for deployment. Here's what each service needs to deploy on the ECS cluster:
 
 - **ECS Task Definition**: Defines the container specifications and resources for your microservice.

@@ -8,7 +8,7 @@ module "ecs-fargate-service" {
   environment         = var.environment
   container_version   = var.container_version
   log_group_name      = "dev/world-service"
-  ecr_repository_name = "public.ecr.aws/w0f5g4k6/hello-svc"
+  ecr_repository_name = "public.ecr.aws/w0f5g4k6/world-svc"
   port                = 80
   health_check_path   = "/world"
   cloudmap_namespace  =  var.cloudmap_namespace
